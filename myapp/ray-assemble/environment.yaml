@@ -1,0 +1,7 @@
+pip:
+  - ray[serve]
+  - transformers
+  - requests
+  - torch
+  - starlette
+working_dir: "./app_dir"

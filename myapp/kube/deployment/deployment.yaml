@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: translate-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: translate-app
+  template:
+    metadata:
+      labels:
+        app: translate-app
+    spec:
+      containers:
+      - name: translate-app-container
+        image: k3d-myregistry.localhost:12345/ray-container:1.0.0
+        command: ["serve"]
+        args: ["run", "serve:translator_app"]
+        ports:
+        - containerPort: 8000
+        - containerPort: 8265
+        resources:
+          requests:
+            memory: "2Gi"
+          limits:
+            memory: "3Gi"
+        volumeMounts:
+        - name: dshm
+          mountPath: /dev/shm
+      volumes:
+      - name: dshm
+        emptyDir:
+          medium: Memory
+          sizeLimit: "3Gi"

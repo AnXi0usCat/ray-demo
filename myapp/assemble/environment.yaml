@@ -1,0 +1,4 @@
+pip:
+  - requests
+  - numpy
+working_dir: "./app_dir"
